@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [ -z $1 ]
+	then git push a master 
+else
+	git push a $1
+fi

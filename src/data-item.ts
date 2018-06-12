@@ -6,23 +6,19 @@ import {
         PROPS,
 
         DATA_ITEM,
-      } from './constants'
+      } from './constants';
+"
+import { IDataItemProps } from "./props-interface";
 
 class DataItem {
 
   TYPE: symbol = DATA_ITEM;
   [DATA]: object;
-  [PROPS]: object;
+  [PROPS]: IDataItemProps;
 
-  constructor(key:string, props:object, data:any = NONE) {
-
-    this[DATA] = data;
-    this[PROPS] = {
-      ...props,
-      lastSetTime: new Date(),
-      key
-    }
-
+  constructor(props:IDataItemProps, value: any) {
+    this[DATA] = value;
+    this[PROPS] = props;
   }
 
   get(_defaultValue:any = NONE) {
@@ -35,12 +31,12 @@ class DataItem {
     return this[DATA];
   }
 
-  set(value:any) {
-    const { key } = this[PROPS];
-
-    this[DATA][key] = value;
+  set(value:any, expiresIn: number | null): void {
+    this[DATA] = value;
     this[PROPS].lastSetTime = new Date();
-    return this;
+    if (expiresIn === null) return;
+
+    this[PROPS].expiresIn = Number(expiresIn);
   }
 
 }
