@@ -7,7 +7,7 @@ import {
 
         DATA_ITEM,
       } from './constants';
-"
+
 import { IDataItemProps } from "./props-interface";
 
 class DataItem {
@@ -23,10 +23,10 @@ class DataItem {
 
   get(_defaultValue:any = NONE) {
 
-    const { expires, lastSetTime } = this[PROPS];
+    const { expiresIn, lastSetTime } = this[PROPS];
 
-    const elapsed = new Date() - lastSetTime;
-    if (elapsed > expires) return _defaultValue;
+    const elapsed = ( new Date().valueOf() ) - lastSetTime.valueOf();
+    if (elapsed > expiresIn) return _defaultValue;
 
     return this[DATA];
   }

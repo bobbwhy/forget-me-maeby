@@ -71,8 +71,6 @@ class ForgetMeMaeby {
     return this;
   }
 
-
-
 }
 
 export default ForgetMeMaeby;
