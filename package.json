@@ -1,0 +1,22 @@
+{
+  "name": "forget-me-maybe",
+  "version": "0.0.1",
+  "description": "A basic data cache with expirations for data cached.",
+  "main": "lib/index.js",
+  "repository": "https://github.com/bobbwhy/forget-me-maybe.git",
+  "author": "Robert LaMarca <robertlamarca@gmail.com>",
+  "license": "GPL-2.0",
+  "scripts": {
+    "build": "yarn run babel-node --require ./setup/babel-polyfill.js scripts/build.js | ./node_modules/.bin/bunyan",
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.0.0-beta.49",
+    "@babel/core": "^7.0.0-beta.49",
+    "@babel/node": "^7.0.0-beta.49",
+    "@babel/preset-env": "^7.0.0-beta.49",
+    "@babel/preset-typescript": "^7.0.0-beta.49",
+    "@babel/register": "^7.0.0-beta.49",
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0"
+  }
+}
