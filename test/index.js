@@ -1,10 +1,11 @@
 
+
 require('@babel/register')(
   { 
-    extensions: ['.js', '.jsx', '.es6']
+    extensions: ['.js', '.ts']
   }
 );
 
-require('./core-test.js');
-// require('./method-build-test');
+require('.ts');
+
 

@@ -1,5 +1,5 @@
 {
-  "name": "forget-me-maybe",
+  "name": "forget-me-maeby",
   "version": "0.0.1",
   "description": "A basic data cache with expirations for data cached.",
   "main": "lib/index.js",
@@ -7,16 +7,34 @@
   "author": "Robert LaMarca <robertlamarca@gmail.com>",
   "license": "GPL-2.0",
   "scripts": {
-    "build": "yarn run babel-node --require ./setup/babel-polyfill.js scripts/build.js | ./node_modules/.bin/bunyan",
+    "build": "yarn clean:build && tsc --emitDeclarationOnly && babel src --ignore src/**/__tests__ --out-dir dist --extensions '.ts,.tsx'",
+    "clean:build": "rm -rf dist",
+    "pretest": "tsc",
+    "test:dev": "pwd && NODE_PATH=$(pwd) mocha --require setup/babel-polyfill.js ./test/test.dev.ts | ./node_modules/.bin/bunyan",
+    "__test:dev": "babel-node --extensions '.ts, .tsx' ./test/test.dev.ts | ./node_modules/.bin/bunyan",
+    "watch": "mocha-typescript-watch",
+    "a:a": "mocha"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.49",
-    "@babel/core": "^7.0.0-beta.49",
-    "@babel/node": "^7.0.0-beta.49",
-    "@babel/preset-env": "^7.0.0-beta.49",
-    "@babel/preset-typescript": "^7.0.0-beta.49",
-    "@babel/register": "^7.0.0-beta.49",
+    "@babel/cli": "^7.0.0-beta.51",
+    "@babel/core": "^7.0.0-beta.51",
+    "@babel/node": "^7.0.0-beta.51",
+    "@babel/plugin-proposal-class-properties": "^7.0.0-beta.51",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.51",
+    "@babel/preset-env": "^7.0.0-beta.51",
+    "@babel/preset-stage-0": "^7.0.0-beta.51",
+    "@babel/preset-typescript": "^7.0.0-beta.51",
+    "@babel/register": "^7.0.0-beta.51",
+    "@types/bunyan": "^1.8.4",
+    "@types/chai": "^4.1.4",
+    "@types/node": "^10.3.2",
+    "bunyan": "^1.8.12",
     "chai": "^4.1.2",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "mocha-typescript": "^1.1.16",
+    "typescript": "^2.9.2"
+  },
+  "dependencies": {
+    "@types/mocha": "^5.2.2"
   }
 }

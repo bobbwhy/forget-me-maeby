@@ -11,3 +11,17 @@ export const PROPS = Symbol('PROPS');
 // TYPES
 export const FORGET_ME_MAEBY = Symbol('FORGET_ME_MAEBY');
 export const DATA_ITEM = Symbol('DATA_ITEM');
+
+export interface ICONSTANTS {
+
+          ALL: symbol
+          NONE: symbol,
+          DATA: symbol,
+          KEYS: symbol,
+          PROPS: symbol,
+
+          FORGET_ME_MAEBY: symbol,
+          DATA_ITEM: symbol,
+        }
+
+

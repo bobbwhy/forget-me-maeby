@@ -1,4 +1,6 @@
 
 import ForgetMeMaeby from "./forget-me-maeby";
 
-export default ForgetMeMaeby;
+import * as CONSTANTS from "./constants";
+
+export { ForgetMeMaeby as default, CONSTANTS }

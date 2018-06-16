@@ -43,7 +43,7 @@ class ForgetMeMaeby {
 
   set(key:string, value: any, expiresIn: number | null): ForgetMeMaeby {
     const item: DataItem = this[DATA][key];
-    if (!item) return this[CREATE_DATA_ITEM](key, value, expiresIn);
+    if (!item) return this.createDataItem(key, value, expiresIn);
 
     item.set(value, expiresIn);
     return this;
@@ -61,7 +61,7 @@ class ForgetMeMaeby {
     return this;
   }
 
-  [CREATE_DATA_ITEM](key: string, value: any, expiresIn: number | null): ForgetMeMaeby {
+  private createDataItem(key: string, value: any, expiresIn: number | null): ForgetMeMaeby {
     const props:IDataItemProps  = {
             ...this[PROPS],
             key,
@@ -74,3 +74,5 @@ class ForgetMeMaeby {
 }
 
 export default ForgetMeMaeby;
+
+// export default true;
