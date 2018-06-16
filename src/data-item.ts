@@ -8,19 +8,25 @@ import {
         DATA_ITEM,
       } from './constants';
 
-import { IDataItemProps } from "./props-interface";
+import Base from "./base";
 
-class DataItem {
+/**
+ * The data Item accessor for a ForgetMeMaeby cache
+ */
+class DataItem extends Base {
 
   TYPE: symbol = DATA_ITEM;
   [DATA]: object;
-  [PROPS]: IDataItemProps;
 
-  constructor(props:IDataItemProps, value: any) {
-    this[DATA] = value;
-    this[PROPS] = props;
+  constructor(key: string) {
+    super(key);
   }
 
+  /**
+   * gets the value of this dataitem.  If a default value is passed
+   * in returns that if the set value == null or if time elapsed
+   * @param { any } _defaultValue
+   */
   get(_defaultValue:any = NONE) {
 
     const { expiresIn, lastSetTime } = this[PROPS];
@@ -31,6 +37,12 @@ class DataItem {
     return this[DATA];
   }
 
+  /**
+   * lets the value of this data item.
+   * allows for
+   * @param value
+   * @param expiresIn
+   */
   set(value:any, expiresIn: number | null): void {
     this[DATA] = value;
     this[PROPS].lastSetTime = new Date();

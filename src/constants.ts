@@ -1,4 +1,6 @@
 
+import { IForgetMeMaebyProps } from "./props-interface";
+
 // VALUES
 export const ALL = Symbol('ALL');
 export const NONE = Symbol('NONE');
@@ -12,6 +14,15 @@ export const PROPS = Symbol('PROPS');
 export const FORGET_ME_MAEBY = Symbol('FORGET_ME_MAEBY');
 export const DATA_ITEM = Symbol('DATA_ITEM');
 
+// VALU ES
+export const DEFAULT_PROPS: IForgetMeMaebyProps = {
+          key: "",
+          expiresIn: 1000 * 60 * 60,
+          lastSetTime: new Date(),
+          uid: "",
+       }
+
+
 export interface ICONSTANTS {
 
           ALL: symbol
@@ -22,6 +33,10 @@ export interface ICONSTANTS {
 
           FORGET_ME_MAEBY: symbol,
           DATA_ITEM: symbol,
+
+          DEFAULT_EXPIRES_IN: symbol,
         }
+
+
 
 

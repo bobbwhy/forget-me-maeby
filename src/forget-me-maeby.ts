@@ -3,37 +3,47 @@ import {
         ALL,
         NONE,
         DATA,
-        KEYS,
         PROPS,
         FORGET_ME_MAEBY,
+
         } from "./constants";
 
 import {
-        IDataItemProps,
         IDataObject,
         IForgetMeMaebyProps,
       } from "./props-interface";
 
 import DataItem from "./data-item";
 
-const CREATE_DATA_ITEM = Symbol('CREATE_DATA_ITEM');
+import Base from "./base";
 
-class ForgetMeMaeby {
+/**
+ * ForgetMeMaeby is a simple data cache with
+ * expiration dates for data.
+ */
+class ForgetMeMaeby extends Base {
 
   TYPE = FORGET_ME_MAEBY;
   [DATA]:IDataObject;
-  [PROPS]:IForgetMeMaebyProps;
 
-  constructor() {
+  constructor(key: string = "anonymousForgetMeMaeby") {
+    super(key);
     this[DATA] = {};
-    this[PROPS] = {
-      expiresIn: 1000 * 60 * 60 * 24,
-      lastSetTime: new Date(),
-    }
   }
 
+  /**
+   * Gets the value of a DataItem by key.  If a defaultValue
+   * is passed in, will return the defaultValue if
+   * no DataItem is found.
+   *
+   * If no key is passed in will return ALL DataItem values available.
+   *
+   * If the value expiresIn is elapsed, will return null;
+   * @param { string | symbol } key
+   * @param { any } _defaultValue
+   */
   get(key:string | symbol = ALL, _defaultValue = NONE): any {
-    if (key === ALL) return this[DATA];
+    if (key === ALL) return this.createAllDataPayload();
 
     const item:DataItem = this[DATA][String(key)];
     if (!item) return _defaultValue;
@@ -41,6 +51,13 @@ class ForgetMeMaeby {
     return item.get(_defaultValue);
   }
 
+  /**
+   * Will set the value of a data item at key to value.
+   * Optional override is available for expiresIn value.
+   * @param { string } key
+   * @param { any } value
+   * @param { number | null } expiresIn
+   */
   set(key:string, value: any, expiresIn: number | null): ForgetMeMaeby {
     const item: DataItem = this[DATA][key];
     if (!item) return this.createDataItem(key, value, expiresIn);
@@ -49,30 +66,55 @@ class ForgetMeMaeby {
     return this;
   }
 
+  /**
+   * deletes a dataItem at key
+   * @param { string } key
+   */
   delete(key:string): ForgetMeMaeby {
     delete this[DATA][key];
     return this;
   }
 
-  expiresIn(value:number | symbol = NONE): ForgetMeMaeby | number {
-    if (value === NONE) return this[PROPS]['expiresIn'];
+  /**
+   * Gets the DataItem instance at key.
+   * This is different than get as this gets the
+   * class instance holding the data.
+   * "get" gets the data from that class instance
+   * @param ){ string } key
+   */
+  getDataItem = (key:string):DataItem => this[DATA][key];
 
-    this[PROPS].expiresIn = Number(value);
+  /**
+   * @private
+   * creates a DataItem instance to hold a value.s
+   * @param { string } key
+   * @param { any } value
+   * @param { number | null } expiresIn
+   */
+  private createDataItem(key: string, value: any, expiresIn: number | null): ForgetMeMaeby {
+    const dataItem: DataItem = new DataItem(key);
+    dataItem.expiresIn(expiresIn === null ? Number(this.expiresIn()) : expiresIn);
+    dataItem.set(value, null);
+    this[DATA][key] = dataItem;
     return this;
   }
 
-  private createDataItem(key: string, value: any, expiresIn: number | null): ForgetMeMaeby {
-    const props:IDataItemProps  = {
-            ...this[PROPS],
-            key,
-            expiresIn: Number(expiresIn),
-          }
-    this[DATA][key] = new DataItem(props, value);
-    return this;
+  /**
+   * @private
+   * creates a data object holding the values of ALL data items.
+   */
+  private createAllDataPayload():object {
+
+    const rt = {};
+    const data = this[DATA];
+    const dataItemKeys = Object.keys(data);
+    dataItemKeys.forEach((key:string):void => {
+      rt[key] = data[key].get();
+    })
+    return rt;
   }
 
 }
 
 export default ForgetMeMaeby;
 
-// export default true;
