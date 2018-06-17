@@ -7,13 +7,10 @@
   "author": "Robert LaMarca <robertlamarca@gmail.com>",
   "license": "GPL-2.0",
   "scripts": {
-    "build": "yarn clean:build && tsc --emitDeclarationOnly && babel src --ignore src/**/__tests__ --out-dir dist --extensions '.ts,.tsx'",
+    "build": "yarn clean:build && tsc --emitDeclarationOnly && babel src --ignore src/**/__tests__ --out-dir lib --extensions '.ts,.tsx'",
     "clean:build": "rm -rf dist",
-    "pretest": "tsc",
     "test:dev": "pwd && NODE_PATH=$(pwd) mocha --require setup/babel-polyfill.js ./test/test.dev.ts | ./node_modules/.bin/bunyan",
-    "__test:dev": "babel-node --extensions '.ts, .tsx' ./test/test.dev.ts | ./node_modules/.bin/bunyan",
-    "watch": "mocha-typescript-watch",
-    "a:a": "mocha"
+    "test:lib": "pwd && NODE_PATH=$(pwd) mocha --require setup/babel-polyfill.js ./test/test.lib.ts | ./node_modules/.bin/bunyan"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.51",
