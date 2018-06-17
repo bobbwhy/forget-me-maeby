@@ -91,7 +91,7 @@ class ForgetMeMaeby extends Base {
    * @param { any } value
    * @param { number | null } expiresIn
    */
-  private createDataItem(key: string, value: any, expiresIn: number | null): ForgetMeMaeby {
+  private createDataItem(key: string, value: any, expiresIn: number | null = null): ForgetMeMaeby {
     const dataItem: DataItem = new DataItem(key);
     dataItem.expiresIn(expiresIn === null ? Number(this.expiresIn()) : expiresIn);
     dataItem.set(value, null);

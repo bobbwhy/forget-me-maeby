@@ -32,9 +32,12 @@ class DataItem extends Base {
     const { expiresIn, lastSetTime } = this[PROPS];
 
     const elapsed = ( new Date().valueOf() ) - lastSetTime.valueOf();
-    if (elapsed > expiresIn) return _defaultValue;
 
-    return this[DATA];
+    if (expiresIn === -1 || expiresIn > elapsed) return this[DATA];
+
+    return _defaultValue;
+
+    // return this[DATA];
   }
 
   /**

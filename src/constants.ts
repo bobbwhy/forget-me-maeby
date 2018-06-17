@@ -34,7 +34,7 @@ export interface ICONSTANTS {
           FORGET_ME_MAEBY: symbol,
           DATA_ITEM: symbol,
 
-          DEFAULT_EXPIRES_IN: symbol,
+          DEFAULT_PROPS: IForgetMeMaebyProps,
         }
 
 
